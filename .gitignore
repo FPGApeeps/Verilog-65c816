@@ -1,0 +1,13 @@
+*.swp
+*.swo
+deps*/*
+objs*/*
+objs_dis*/*
+asmouts*/*
+preprocs*/*
+*.gdb_history*
+*tags
+*types_*.taghl
+*.txt.ignore
+*.vvp
+testing/*
