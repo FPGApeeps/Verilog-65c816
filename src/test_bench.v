@@ -27,6 +27,7 @@ module test_bench;
 	wire [`tr_addr_msb_pos:0] some_ram_addr;
 	wire [`tr_data_msb_pos:0] some_ram_data_in;
 	wire [`tr_data_msb_pos:0] some_ram_data_out;
+	wire some_ram_data_ready;
 	
 	
 	initial
@@ -45,7 +46,8 @@ module test_bench;
 	test_ram some_ram( .clk(clk), .we(some_ram_we),
 		.addr(some_ram_addr),
 		.data_in(some_ram_data_in), 
-		.data_out(some_ram_data_out) );
+		.data_out(some_ram_data_out),
+		.data_ready(some_ram_data_ready) );
 	
 	
 endmodule
