@@ -16,23 +16,37 @@
 // with Verilog-65c816 CPU.  If not, see <http://www.gnu.org/licenses/>.
 
 
-`ifndef test_ram_defines_vinc
-`define test_ram_defines_vinc
+`ifndef cpu_defines_vinc
+`define cpu_defines_vinc
 
 `include "src/bit_defines.vinc"
 
 
-//// Don't try this much RAM with a real block RAM
-//`define _TR_ADDR_WIDTH 24
-//`define _TR_ADDR_WIDTH 18
-`define _TR_ADDR_WIDTH 16
-`define TR_ADDR_MSB_POS `WIDTH_TO_MSB_POS(`_TR_ADDR_WIDTH)
+// Far addresses
+`define _CPU_FAR_ADDR_WIDTH 24
+`define CPU_FAR_ADDR_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_FAR_ADDR_WIDTH)
+
+// Absolute addresses
+`define _CPU_ABS_ADDR_WIDTH 16
+`define CPU_ABS_ADDR_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_ABS_ADDR_WIDTH)
+
+// Direct page addresses
+`define _CPU_DP_ADDR_WIDTH 8
+`define CPU_DP_ADDR_MSB_POS `WIDTH_TO_MSB_POS(`CPU_DP_ADDR_MSB_POS)
 
 
-// 8-bit accesses
-`define _TR_DATA_WIDTH 8
-`define TR_DATA_MSB_POS `WIDTH_TO_MSB_POS(`_TR_DATA_WIDTH)
+
+// Data bank, program bank
+`define _CPU_BANK_WIDTH 8
+`define CPU_BANK_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_BANK_WIDTH)
 
 
 
-`endif		// test_ram_defines_vinc
+
+// Data bus
+`define _CPU_DATA_WIDTH 8
+`define CPU_DATA_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_DATA_WIDTH)
+
+
+
+`endif		// cpu_defines_vinc

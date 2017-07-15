@@ -15,10 +15,41 @@
 // You should have received a copy of the GNU General Public License along
 // with Verilog-65c816.  If not, see <http://www.gnu.org/licenses/>.
 
-`include "src/test_ram_defines.vinc"
+`include "src/cpu_defines.vinc"
 
-module Cpu(input wire clk, input wire rst);
-	
-	
-	
+module Cpu(input wire clk, input wire rst, 
+	input wire [`CPU_DATA_MSB_POS:0] data_in,
+
+
+	// Read enable
+	output reg re,
+
+	// Write enable
+	output reg we,
+
+	// Address we want to read from or write to
+	output reg [`CPU_FAR_ADDR_MSB_POS:0] addr,
+
+	output reg [`CPU_DATA_MSB_POS:0] data_out);
+
+
+	reg [`CPU_DATA_MSB_POS:0] _data_in_buf;
+
+
+	always @ (posedge clk)
+	begin
+		if (rst)
+		begin
+			
+
+		end
+
+		else // if (!rst)
+		begin
+			
+
+		end
+
+	end
+
 endmodule

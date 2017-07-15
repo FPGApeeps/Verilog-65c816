@@ -19,38 +19,38 @@
 `include "src/test_ram_defines.vinc"
 
 module TestBench;
-	
+
 	reg clk, rst;
-	
+
 	wire some_ram_we; 
-	
+
 	wire [`TR_ADDR_MSB_POS:0] some_ram_addr;
 	wire [`TR_DATA_MSB_POS:0] some_ram_data_in;
 	wire [`TR_DATA_MSB_POS:0] some_ram_data_out;
 	wire some_ram_data_ready;
-	
-	
+
+
 	initial
 	begin
 		clk = 0;
 		rst = 0;
 	end
-	
+
 	// Clock signal generator
 	always
 	begin
 		#1 clk = !clk;
 	end
-	
-	
-	
+
+
+
 	TestRam some_ram(.clk(clk), .we(some_ram_we),
 		.addr(some_ram_addr),
 		.data_in(some_ram_data_in), 
 		.data_out(some_ram_data_out),
 		.data_ready(some_ram_data_ready));
-	
-	
+
+
 endmodule
 
 
