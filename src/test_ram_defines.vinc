@@ -23,14 +23,14 @@
 
 
 //// Don't try this much RAM with a real block RAM
-//`define _tr_addr_width 24
-`define _tr_addr_width 18
-`define tr_addr_msb_pos `width_to_msb_pos(`_tr_addr_width)
+//`define _TR_ADDR_WIDTH 24
+`define _TR_ADDR_WIDTH 18
+`define TR_ADDR_MSB_POS `WIDTH_TO_MSB_POS(`_TR_ADDR_WIDTH)
 
 
 // 8-bit accesses
-`define _tr_data_width 8
-`define tr_data_msb_pos `width_to_msb_pos(`_tr_data_width)
+`define _TR_DATA_WIDTH 8
+`define TR_DATA_MSB_POS `WIDTH_TO_MSB_POS(`_TR_DATA_WIDTH)
 
 
 

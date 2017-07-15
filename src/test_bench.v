@@ -18,15 +18,15 @@
 
 `include "src/test_ram_defines.vinc"
 
-module test_bench;
+module TestBench;
 	
 	reg clk, rst;
 	
 	wire some_ram_we; 
 	
-	wire [`tr_addr_msb_pos:0] some_ram_addr;
-	wire [`tr_data_msb_pos:0] some_ram_data_in;
-	wire [`tr_data_msb_pos:0] some_ram_data_out;
+	wire [`TR_ADDR_MSB_POS:0] some_ram_addr;
+	wire [`TR_DATA_MSB_POS:0] some_ram_data_in;
+	wire [`TR_DATA_MSB_POS:0] some_ram_data_out;
 	wire some_ram_data_ready;
 	
 	
@@ -44,11 +44,11 @@ module test_bench;
 	
 	
 	
-	test_ram some_ram( .clk(clk), .we(some_ram_we),
+	TestRam some_ram(.clk(clk), .we(some_ram_we),
 		.addr(some_ram_addr),
 		.data_in(some_ram_data_in), 
 		.data_out(some_ram_data_out),
-		.data_ready(some_ram_data_ready) );
+		.data_ready(some_ram_data_ready));
 	
 	
 endmodule

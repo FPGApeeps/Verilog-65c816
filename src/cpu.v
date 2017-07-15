@@ -17,7 +17,7 @@
 
 `include "src/test_ram_defines.vinc"
 
-module cpu( input wire clk, input wire rst );
+module Cpu(input wire clk, input wire rst);
 	
 	
 	

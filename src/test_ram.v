@@ -19,25 +19,25 @@
 `include "src/test_ram_defines.vinc"
 
 // Block RAM test module
-module _internal_test_ram( input wire clk, 
+module InternalTestRam(input wire clk, 
 	
 	// Write enable
 	input wire we,
 	
 	// Address
-	input wire [`tr_addr_msb_pos:0] addr,
+	input wire [`TR_ADDR_MSB_POS:0] addr,
 	
 	// Data in
-	input wire [`tr_data_msb_pos:0] data_in,
+	input wire [`TR_DATA_MSB_POS:0] data_in,
 	
 	// Data out
-	output reg [`tr_data_msb_pos:0] data_out );
+	output reg [`TR_DATA_MSB_POS:0] data_out);
 	
-	reg [`tr_data_msb_pos:0] mem[0:`tr_addr_msb_pos];
+	reg [`TR_DATA_MSB_POS:0] mem[0:`TR_ADDR_MSB_POS];
 	
-	initial $readmemh( "readmemh_input.txt.ignore", mem );
+	initial $readmemh("readmemh_input.txt.ignore", mem);
 	
-	always @ ( posedge clk )
+	always @ (posedge clk)
 	begin
 		if (we)
 		begin
@@ -51,7 +51,7 @@ module _internal_test_ram( input wire clk,
 endmodule
 
 
-module test_ram( input wire clk,
+module TestRam(input wire clk,
 	
 	input wire req_rdwr,
 	
@@ -59,24 +59,24 @@ module test_ram( input wire clk,
 	input wire we,
 	
 	// Address
-	input wire [`tr_addr_msb_pos:0] addr,
+	input wire [`TR_ADDR_MSB_POS:0] addr,
 	
 	// Data in
-	input wire [`tr_data_msb_pos:0] data_in,
+	input wire [`TR_DATA_MSB_POS:0] data_in,
 	
 	// Data out
-	output wire [`tr_data_msb_pos:0] data_out,
+	output wire [`TR_DATA_MSB_POS:0] data_out,
 	
 	// data_ready goes high when data is ready
-	output reg data_ready );
+	output reg data_ready);
 	
 	
 	reg can_rdwr;
 	
 	
 	wire internal_we;
-	wire [`tr_addr_msb_pos:0] internal_addr;
-	wire [`tr_data_msb_pos:0] internal_data_in, internal_data_out;
+	wire [`TR_ADDR_MSB_POS:0] internal_addr;
+	wire [`TR_DATA_MSB_POS:0] internal_data_in, internal_data_out;
 	
 	// Inputs to internal_test_ram
 	assign internal_we = we;
@@ -87,16 +87,16 @@ module test_ram( input wire clk,
 	assign data_out = internal_data_out;
 	
 	
-	_internal_test_ram internal_test_ram( .clk(clk), .we(internal_we),
+	InternalTestRam internal_test_ram(.clk(clk), .we(internal_we),
 		.addr(internal_addr), .data_in(internal_data_in),
-		.data_out(internal_data_out) );
+		.data_out(internal_data_out));
 	
 	
 	initial data_ready = 0;
 	initial can_rdwr = 1;
 	
 	
-	always @ ( posedge clk )
+	always @ (posedge clk)
 	begin
 		can_rdwr <= !can_rdwr;
 		

@@ -20,7 +20,7 @@
 `define bit_defines_vinc
 
 
-`define width_to_msb_pos( width ) ( width - 1 )
+`define WIDTH_TO_MSB_POS(width) (width - 1)
 
 
 
