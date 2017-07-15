@@ -20,35 +20,35 @@
 
 module TestBench;
 
-	reg clk, rst;
+	reg __clk, __rst;
 
-	wire some_ram_we; 
+	wire __some_ram_we; 
 
-	wire [`TR_ADDR_MSB_POS:0] some_ram_addr;
-	wire [`TR_DATA_MSB_POS:0] some_ram_data_in;
-	wire [`TR_DATA_MSB_POS:0] some_ram_data_out;
-	wire some_ram_data_ready;
+	wire [`TR_ADDR_MSB_POS:0] __some_ram_addr;
+	wire [`TR_DATA_MSB_POS:0] __some_ram_data_in;
+	wire [`TR_DATA_MSB_POS:0] __some_ram_data_out;
+	wire __some_ram_data_ready;
 
 
 	initial
 	begin
-		clk = 0;
-		rst = 0;
+		__clk = 0;
+		__rst = 0;
 	end
 
 	// Clock signal generator
 	always
 	begin
-		#1 clk = !clk;
+		#1 __clk = !__clk;
 	end
 
 
 
-	TestRam some_ram(.clk(clk), .we(some_ram_we),
-		.addr(some_ram_addr),
-		.data_in(some_ram_data_in), 
-		.data_out(some_ram_data_out),
-		.data_ready(some_ram_data_ready));
+	TestRam some_ram(.clk(__clk), .we(__some_ram_we),
+		.addr(__some_ram_addr),
+		.data_in(__some_ram_data_in), 
+		.data_out(__some_ram_data_out),
+		.data_ready(__some_ram_data_ready));
 
 
 endmodule

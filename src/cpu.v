@@ -19,16 +19,28 @@
 `include "src/cpu_defines.vinc"
 
 
-module Cpu(input wire clk, input wire rst, input wire enable
+module Cpu(input wire clk, input wire rst, input wire enable,
 	input wire [`CPU_DATA_MSB_POS:0] data_in,
 
-	// Read enable, Write enable
-	output reg re, we,
+	// If we're requesting a read or write
+	output reg req_rdwr,
+
+
+	// If req_rdwr == 1, then are we requesting a read or a write?  
+	// 
+	// Here would be a good reason to use an enum if this project were
+	// written in SystemVerilog.
+	output reg which_rdwr,
 
 	// Address we want to read from or write to
-	output reg [`CPU_FAR_ADDR_MSB_POS:0] addr,
+	//output reg [`CPU_FAR_ADDR_MSB_POS:0] addr,
+	output reg [`CPU_ABS_ADDR_MSB_POS:0] addr,
 
 	output reg [`CPU_DATA_MSB_POS:0] data_out);
+
+
+	// Parameters
+	`include "src/cpu_params.vinc"
 
 
 	reg [`CPU_DATA_MSB_POS:0] _data_in_buf;
@@ -42,7 +54,7 @@ module Cpu(input wire clk, input wire rst, input wire enable
 
 		end
 
-		else // if (!rst)
+		else if (!enable)
 		begin
 			
 
