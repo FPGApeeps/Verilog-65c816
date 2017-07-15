@@ -22,8 +22,9 @@
 `include "src/bit_defines.vinc"
 
 
-// Don't try this much RAM with a real block RAM
-`define _tr_addr_width 24
+//// Don't try this much RAM with a real block RAM
+//`define _tr_addr_width 24
+`define _tr_addr_width 18
 `define tr_addr_msb_pos `width_to_msb_pos(`_tr_addr_width)
 
 

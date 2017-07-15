@@ -1,5 +1,4 @@
-*.swp
-*.swo
+*.sw[po]
 deps*/*
 objs*/*
 objs_dis*/*

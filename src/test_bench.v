@@ -36,6 +36,7 @@ module test_bench;
 		rst = 0;
 	end
 	
+	// Clock signal generator
 	always
 	begin
 		#1 clk = !clk;
