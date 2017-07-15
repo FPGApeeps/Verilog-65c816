@@ -73,21 +73,23 @@ module TestRam(input wire clk,
 	reg __can_rdwr;
 
 
-	wire __we;
-	wire [`TR_ADDR_MSB_POS:0] __addr;
-	wire [`TR_DATA_MSB_POS:0] __data_in, __data_out;
+	// "pt" is short for "passthrough"
+	wire __pt_we;
+	wire [`TR_ADDR_MSB_POS:0] __pt_addr;
+	wire [`TR_DATA_MSB_POS:0] __pt_data_in, __pt_data_out;
 
 	// Inputs to internal_test_ram
-	assign __we = we;
-	assign __addr = addr;
-	assign __data_in = data_in;
+	assign __pt_we = we;
+	assign __pt_addr = addr;
+	assign __pt_data_in = data_in;
 
 	// Outputs from internal_test_ram
-	assign data_out = __data_out;
+	assign data_out = __pt_data_out;
 
 
-	_InternalTestRam internal_test_ram(.clk(clk), .we(__we), .addr(__addr),
-		.data_in(__data_in), .data_out(__data_out));
+	_InternalTestRam internal_test_ram(.clk(clk), .we(__pt_we), 
+		.addr(__pt_addr), .data_in(__pt_data_in),
+		.data_out(__pt_data_out));
 
 
 	initial data_ready = 0;
