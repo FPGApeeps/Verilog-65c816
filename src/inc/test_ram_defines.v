@@ -19,7 +19,7 @@
 `ifndef test_ram_defines_vinc
 `define test_ram_defines_vinc
 
-`include "src/bit_defines.vinc"
+`include "src/inc/bit_defines.v"
 
 
 //// Don't try this much RAM with a real block RAM

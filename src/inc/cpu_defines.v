@@ -19,7 +19,7 @@
 `ifndef cpu_defines_vinc
 `define cpu_defines_vinc
 
-`include "src/bit_defines.vinc"
+`include "src/inc/bit_defines.v"
 
 
 // Far addresses

@@ -16,7 +16,7 @@
 // with Verilog-65c816.  If not, see <http://www.gnu.org/licenses/>.
 
 
-`include "src/test_ram_defines.vinc"
+`include "src/inc/test_ram_defines.v"
 
 // Block RAM test module
 module _InternalTestRam(input wire clk, 
