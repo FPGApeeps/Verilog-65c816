@@ -33,18 +33,18 @@ module _InternalTestRam(input wire clk,
 	// Data out
 	output reg [`TR_DATA_MSB_POS:0] data_out);
 
-	reg [`TR_DATA_MSB_POS:0] mem[0:`TR_ADDR_MSB_POS];
+	reg [`TR_DATA_MSB_POS:0] __mem[0:`TR_ADDR_MSB_POS];
 
-	initial $readmemh("readmemh_input.txt.ignore", mem);
+	initial $readmemh("readmemh_input.txt.ignore", __mem);
 
 	always @ (posedge clk)
 	begin
 		if (we)
 		begin
-			mem[addr] <= data_in;
+			__mem[addr] <= data_in;
 		end
 
-		data_out <= mem[addr];
+		data_out <= __mem[addr];
 	end
 
 endmodule
@@ -70,34 +70,33 @@ module TestRam(input wire clk,
 	output reg data_ready);
 
 
-	reg can_rdwr;
+	reg __can_rdwr;
 
 
-	wire internal_we;
-	wire [`TR_ADDR_MSB_POS:0] internal_addr;
-	wire [`TR_DATA_MSB_POS:0] internal_data_in, internal_data_out;
+	wire __we;
+	wire [`TR_ADDR_MSB_POS:0] __addr;
+	wire [`TR_DATA_MSB_POS:0] __data_in, __data_out;
 
 	// Inputs to internal_test_ram
-	assign internal_we = we;
-	assign internal_addr = addr;
-	assign internal_data_in = data_in;
+	assign __we = we;
+	assign __addr = addr;
+	assign __data_in = data_in;
 
 	// Outputs from internal_test_ram
-	assign data_out = internal_data_out;
+	assign data_out = __data_out;
 
 
-	_InternalTestRam internal_test_ram(.clk(clk), .we(internal_we),
-		.addr(internal_addr), .data_in(internal_data_in),
-		.data_out(internal_data_out));
+	_InternalTestRam internal_test_ram(.clk(clk), .we(__we), .addr(__addr),
+		.data_in(__data_in), .data_out(__data_out));
 
 
 	initial data_ready = 0;
-	initial can_rdwr = 1;
+	initial __can_rdwr = 1;
 
 
 	always @ (posedge clk)
 	begin
-		can_rdwr <= !can_rdwr;
+		__can_rdwr <= !__can_rdwr;
 
 		if (!req_rdwr)
 		begin
@@ -106,7 +105,7 @@ module TestRam(input wire clk,
 
 		else // if (req_rdwr)
 		begin
-			data_ready <= can_rdwr;
+			data_ready <= __can_rdwr;
 		end
 	end
 

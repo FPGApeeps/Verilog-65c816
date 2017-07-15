@@ -43,7 +43,7 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	`include "src/cpu_params.vinc"
 
 
-	reg [`CPU_DATA_MSB_POS:0] _data_in_buf;
+	reg [`CPU_DATA_MSB_POS:0] __data_in_buf;
 
 
 	always @ (posedge clk)

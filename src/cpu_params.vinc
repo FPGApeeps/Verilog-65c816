@@ -22,27 +22,27 @@
 
 // CPU opcodes when in native mode.
 // BRK
-parameter _cpu_nat_op__brk = `_CPU_OPCODE_WIDTH'h00;
+parameter __cpu_nat_op__brk = `_CPU_OPCODE_WIDTH'h00;
 
 // ORA (dp, X)
-parameter _cpu_nat_op__ora__dp_index_indir_com_x = `_CPU_OPCODE_WIDTH'h01;
+parameter __cpu_nat_op__ora__dp_index_indir_com_x = `_CPU_OPCODE_WIDTH'h01;
 
 // COP
-parameter _cpu_nat_op__cop = `_CPU_OPCODE_WIDTH'h02;
+parameter __cpu_nat_op__cop = `_CPU_OPCODE_WIDTH'h02;
 
 // ORA sr, S
-parameter _cpu_nat_op__ora__stack_rel = `_CPU_OPCODE_WIDTH'h03;
+parameter __cpu_nat_op__ora__stack_rel = `_CPU_OPCODE_WIDTH'h03;
 
 // TSB dp
-parameter _cpu_nat_op__tsb__dp = `_CPU_OPCODE_WIDTH'h04;
+parameter __cpu_nat_op__tsb__dp = `_CPU_OPCODE_WIDTH'h04;
 
 // ORA dp
-parameter _cpu_nat_op__ora__dp = `_CPU_OPCODE_WIDTH'h05;
+parameter __cpu_nat_op__ora__dp = `_CPU_OPCODE_WIDTH'h05;
 
 
 
 // NOP
-parameter _cpu_nat_op__nop = `_CPU_OPCODE_WIDTH'hea;
+parameter __cpu_nat_op__nop = `_CPU_OPCODE_WIDTH'hea;
 
 
 `endif		// cpu_params_vinc
