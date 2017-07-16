@@ -36,6 +36,16 @@
 
 
 
+// IMPORTANT!
+// 
+// Change these to use far addresses later on in development!
+// 
+// IMPORTANT!
+`define _CPU_ACTUAL_ADDR_WIDTH `_CPU_ABS_ADDR_WIDTH
+`define CPU_ACTUAL_ADDR_MSB_POS `CPU_ABS_ADDR_MSB_POS
+
+
+
 // Data bank, program bank
 `define _CPU_BANK_WIDTH 8
 `define CPU_BANK_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_BANK_WIDTH)
@@ -98,13 +108,23 @@
 // Stack pointer (SP)
 
 
-// Native mode AND emulation mode
+// Native mode AND Emulation mode
 `define _CPU_REG_SP_WIDTH 16
 `define CPU_REG_SP_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_SP_WIDTH)
 
 
 // Emulation mode
-`define _CPU_REG_SP_EMU_HI_WIDTH
+
+// Bits 15-8 (Always 0x01 in Emulation mode)
+`define _CPU_REG_SP_EMU_HI_WIDTH 8
+`define CPU_REG_SP_EMU_HI_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_SP_WIDTH)
+`define CPU_REG_SP_EMU_HI_LSB_POS `_CPU_REG_SP_EMU_HI_WIDTH
+
+// Bits 7-0
+`define _CPU_REG_SP_EMU_LO_WIDTH 8
+`define CPU_REG_SP_EMU_LO_MSB_POS (`CPU_REG_SP_EMU_HI_LSB_POS - 1)
+`define CPU_REG_SP_EMU_LO_LSB_POS 0
+
 
 
 `endif		// cpu_defines_vinc
