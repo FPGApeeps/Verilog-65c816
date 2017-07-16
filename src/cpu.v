@@ -48,18 +48,15 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 
 	// Parameters
+	//`include "src/inc/generic_params.v"
 	`include "src/inc/cpu_state_params.v"
 	`include "src/inc/cpu_opcode_params.v"
 
-
-	// Flags
-	parameter __false = 1'b0;
-	parameter __true = 1'b1;
+	`include "src/inc/generic_params.v"
 
 
 
 	// Buffer MSB positions
-	parameter __buf_byte_msb_pos = `CPU_DATA_MSB_POS;
 	parameter __state_msb_pos = `_ENUM_MP__CPU_STATE;
 
 
@@ -69,10 +66,41 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 
 
+
+	// A
+	parameter __reg_c_msb_pos = `CPU_REG_C_MSB_POS;
+
+
+	parameter __reg_b_msb_pos = `CPU_REG_B_MSB_POS;
+	parameter __reg_b_lsb_pos = `CPU_REG_B_LSB_POS;
+
+	parameter __reg_a_msb_pos = `CPU_REG_A_MSB_POS;
+	parameter __reg_a_lsb_pos = `CPU_REG_A_LSB_POS;
+
+
+	parameter __reg_index_big_msb_pos = `CPU_REG_INDEX_BIG_MSB_POS;
+	
+
+
+
 	// Internal buffers
 	reg [__buf_byte_msb_pos:0] __data_in_buf;
 	reg [__buf_byte_msb_pos:0] __opcode;
+
+
+	// State machine thing
 	reg [__state_msb_pos:0] __state;
+
+
+
+
+	// Processor Registers
+	reg [__reg_c_msb_pos:0] __reg_c;
+	reg [__reg_index_big_msb_pos:0] __reg_x, __reg_y;
+
+	//reg [__reg_sp_msb_pos:0] __reg_sp;
+	//reg [__reg_pc_msb_pos:0] __reg_pc;
+
 
 
 	always @ (posedge clk)
@@ -88,6 +116,11 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			__opcode <= 0;
 
 
+			__reg_c <= 0;
+			__reg_x <= 2;
+			__reg_y <= 5;
+
+
 			// Initial state
 			__state <= __st_emu__reset;
 
@@ -98,12 +131,13 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			case (__state)
 				__st_emu__reset:
 				begin
-					
+					__state <= __state + 1;
 				end
 
 				default:
 				begin
 					$display("Unknown __state!\n");
+					$finish;
 				end
 			endcase
 			

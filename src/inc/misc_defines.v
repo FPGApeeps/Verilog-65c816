@@ -19,9 +19,13 @@
 `ifndef misc_defines_vinc
 `define misc_defines_vinc
 
+`define WIDTH_TO_MSB_POS(width) (width - 1)
+`define BPRANGE_TO_MASK(bit_pos_hi, bit_pos_lo) \
+	((1 << (bit_pos_hi - bit_pos_lo + 1)) - 1)
+`define BPRANGE_TO_SHIFTED_MASK(bit_pos_hi, bit_pos_lo) \
+	(((1 << (bit_pos_hi - bit_pos_lo + 1)) - 1) << bit_pos_lo)
 
 `define _ARR_SIZE_THING(bit_width) ((1 << (bit_width)) - 1)
 `define _ENUM_INC(thing) (thing + 1)
-
 
 `endif		// misc_defines_vinc

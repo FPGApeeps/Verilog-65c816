@@ -17,23 +17,32 @@
 
 
 `include "src/inc/test_ram_defines.v"
+`include "src/inc/cpu_defines.v"
 
 module TestBench;
 
+	`include "src/inc/generic_params.v"
+
+	parameter __counter_msb = 2;
+
 	reg __clk, __rst;
+	reg [__counter_msb:0] __counter;
 
-	wire __some_ram_we; 
+	wire __ram_we; 
 
-	wire [`TR_ADDR_MSB_POS:0] __some_ram_addr;
-	wire [`TR_DATA_MSB_POS:0] __some_ram_data_in;
-	wire [`TR_DATA_MSB_POS:0] __some_ram_data_out;
-	wire __some_ram_data_ready;
+	wire [`TR_ADDR_MSB_POS:0] __ram_addr;
+	wire [`TR_DATA_MSB_POS:0] __ram_data_in;
+	wire [`TR_DATA_MSB_POS:0] __ram_data_out;
+	wire __ram_data_ready;
+
+
 
 
 	initial
 	begin
 		__clk = 0;
-		__rst = 0;
+		__rst = __true;
+		__counter = 0;
 	end
 
 	// Clock signal generator
@@ -43,12 +52,28 @@ module TestBench;
 	end
 
 
+	always @ (posedge __clk)
+	begin
+		if (!__counter[__counter_msb])
+		begin
+			__counter <= __counter + 1;
+		end
 
-	TestRam some_ram(.clk(__clk), .we(__some_ram_we),
-		.addr(__some_ram_addr),
-		.data_in(__some_ram_data_in), 
-		.data_out(__some_ram_data_out),
-		.data_ready(__some_ram_data_ready));
+		else
+		begin
+			__rst <= __false;
+		end
+		
+	end
+
+
+	TestRam ram(.clk(__clk), .we(__ram_we),
+		.addr(__ram_addr),
+		.data_in(__ram_data_in), 
+		.data_out(__ram_data_out),
+		.data_ready(__ram_data_ready));
+	
+	//Cpu cpu(.clk(__clk), .rst(__rst)
 	
 
 	initial

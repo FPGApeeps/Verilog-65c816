@@ -16,8 +16,8 @@
 // with Verilog-65c816.  If not, see <http://www.gnu.org/licenses/>.
 
 
-`ifndef cpu_state_params_vinc
-`define cpu_state_params_vinc
+//`ifndef cpu_state_params_vinc
+//`define cpu_state_params_vinc
 
 `include "src/inc/misc_defines.v"
 
@@ -31,4 +31,4 @@ parameter __st_emu__reset = `_ENUM_WI__CPU_STATE'h000;
 
 
 
-`endif		// cpu_state_params_vinc
+//`endif		// cpu_state_params_vinc

@@ -15,8 +15,8 @@
 // You should have received a copy of the GNU General Public License along
 // with Verilog-65c816 CPU.  If not, see <http://www.gnu.org/licenses/>.
 
-`ifndef cpu_opcode_params_vinc
-`define cpu_opcode_params_vinc
+//`ifndef cpu_opcode_params_vinc
+//`define cpu_opcode_params_vinc
 
 
 `include "src/inc/misc_defines.v"
@@ -47,4 +47,4 @@
 parameter __op__nop = `_CPU_OPCODE_WIDTH'hea;
 
 
-`endif		// cpu_opcode_params_vinc
+//`endif		// cpu_opcode_params_vinc

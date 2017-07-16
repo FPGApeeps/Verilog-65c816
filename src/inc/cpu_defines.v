@@ -19,7 +19,7 @@
 `ifndef cpu_defines_vinc
 `define cpu_defines_vinc
 
-`include "src/inc/bit_defines.v"
+`include "src/inc/misc_defines.v"
 
 
 // Far addresses
@@ -50,6 +50,46 @@
 
 `define _CPU_OPCODE_WIDTH 8
 `define CPU_OPCODE_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_OPCODE_WIDTH)
+
+
+
+// Registers
+
+// Accumulator:  A, B, C
+// Bits 15-0 (C)
+`define _CPU_REG_C_WIDTH 16
+`define CPU_REG_C_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_C_WIDTH)
+
+
+// Bits 15-8 (B)
+`define _CPU_REG_B_WIDTH 8
+`define CPU_REG_B_MSB_POS `CPU_REG_C_MSB_POS
+`define CPU_REG_B_LSB_POS `_CPU_REG_B_WIDTH
+
+// Bits 7-0 (A)
+`define _CPU_REG_A_WIDTH 8
+`define CPU_REG_A_MSB_POS (`CPU_REG_B_LSB_POS - 1)
+`define CPU_REG_A_LSB_POS 0
+
+
+
+// Index registers:  X, Y
+
+// Bits 15-0
+`define _CPU_REG_INDEX_BIG_WIDTH 16
+`define CPU_REG_INDEX_BIG_MSB_POS \
+	`WIDTH_TO_MSB_POS(`_CPU_REG_INDEX_BIG_WIDTH)
+
+
+// Bits 15-8
+`define _CPU_REG_INDEX_HI_WIDTH 8
+`define CPU_REG_INDEX_HI_MSB_POS `CPU_REG_INDEX_BIG_MSB_POS
+`define CPU_REG_INDEX_HI_LSB_POS `_CPU_REG_INDEX_HI_WIDTH
+
+// Bits 7-0
+`define _CPU_REG_INDEX_LO_WIDTH 8
+`define CPU_REG_INDEX_LO_MSB_POS (`CPU_REG_INDEX_HI_LSB_POS - 1)
+`define CPU_REG_INDEX_LO_LSB_POS 0
 
 
 `endif		// cpu_defines_vinc

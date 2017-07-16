@@ -16,12 +16,19 @@
 // with Verilog-65c816 CPU.  If not, see <http://www.gnu.org/licenses/>.
 
 
-`ifndef bit_defines_vinc
-`define bit_defines_vinc
+//`ifndef generic_params_vinc
+//`define generic_params_vinc
+
+//`include "src/inc/cpu_defines.v"
 
 
-`define WIDTH_TO_MSB_POS(width) (width - 1)
+// Flags
+parameter __false = 1'b0;
+parameter __true = 1'b1;
 
 
+// Buffer MSB positions
+parameter __buf_byte_msb_pos = 7;
 
-`endif		// bit_defines_vinc
+
+//`endif		// generic_params_vinc
