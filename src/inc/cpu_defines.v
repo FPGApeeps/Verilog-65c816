@@ -48,6 +48,8 @@
 `define CPU_DATA_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_DATA_WIDTH)
 
 
+
+// Opcode size stuff
 `define _CPU_OPCODE_WIDTH 8
 `define CPU_OPCODE_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_OPCODE_WIDTH)
 
@@ -90,6 +92,19 @@
 `define _CPU_REG_INDEX_LO_WIDTH 8
 `define CPU_REG_INDEX_LO_MSB_POS (`CPU_REG_INDEX_HI_LSB_POS - 1)
 `define CPU_REG_INDEX_LO_LSB_POS 0
+
+
+
+// Stack pointer (SP)
+
+
+// Native mode AND emulation mode
+`define _CPU_REG_SP_WIDTH 16
+`define CPU_REG_SP_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_SP_WIDTH)
+
+
+// Emulation mode
+`define _CPU_REG_SP_EMU_HI_WIDTH
 
 
 `endif		// cpu_defines_vinc

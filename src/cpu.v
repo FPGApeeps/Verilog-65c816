@@ -47,13 +47,12 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	output reg [`CPU_DATA_MSB_POS:0] data_out);
 
 
+
+
 	// Parameters
-	//`include "src/inc/generic_params.v"
+	`include "src/inc/generic_params.v"
 	`include "src/inc/cpu_state_params.v"
 	`include "src/inc/cpu_opcode_params.v"
-
-	`include "src/inc/generic_params.v"
-
 
 
 	// Buffer MSB positions
@@ -65,21 +64,7 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	parameter __wh_rdwr__write = `ENUM__CPU_WH_RDWR__WRITE;
 
 
-
-
-	// A
-	parameter __reg_c_msb_pos = `CPU_REG_C_MSB_POS;
-
-
-	parameter __reg_b_msb_pos = `CPU_REG_B_MSB_POS;
-	parameter __reg_b_lsb_pos = `CPU_REG_B_LSB_POS;
-
-	parameter __reg_a_msb_pos = `CPU_REG_A_MSB_POS;
-	parameter __reg_a_lsb_pos = `CPU_REG_A_LSB_POS;
-
-
-	parameter __reg_index_big_msb_pos = `CPU_REG_INDEX_BIG_MSB_POS;
-	
+	`include "src/inc/cpu_reg_params.v"
 
 
 
@@ -137,6 +122,7 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				default:
 				begin
 					$display("Unknown __state!\n");
+					$display("%d, %d, %d\n", __reg_c, __reg_x, __reg_y);
 					$finish;
 				end
 			endcase
