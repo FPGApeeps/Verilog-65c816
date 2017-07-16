@@ -19,7 +19,7 @@
 `ifndef cpu_enums_vinc
 `define cpu_enums_vinc
 
-`include "src/inc/enum_defines.v"
+`include "src/inc/misc_defines.v"
 `include "src/inc/cpu_defines.v"
 
 
@@ -34,6 +34,9 @@
 `define _ENUM_MP__CPU_WH_RDWR `WIDTH_TO_MSB_POS(_ENUM_WI__CPU_WH_RDWR)
 `define ENUM__CPU_WH_RDWR__READ `_ENUM_WI__CPU_WH_RDWR'h0
 `define ENUM__CPU_WH_RDWR__WRITE `_ENUM_INC(`ENUM__CPU_WH_RDWR__READ)
+
+
+// Opcodes
 
 
 

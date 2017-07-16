@@ -16,6 +16,7 @@
 // with Verilog-65c816.  If not, see <http://www.gnu.org/licenses/>.
 
 
+`include "src/inc/misc_defines.v"
 `include "src/inc/test_ram_defines.v"
 
 // Block RAM test module
@@ -33,7 +34,7 @@ module _InternalTestRam(input wire clk,
 	// Data out
 	output reg [`TR_DATA_MSB_POS:0] data_out);
 
-	reg [`TR_DATA_MSB_POS:0] __mem[0:`TR_ADDR_MSB_POS];
+	reg [`TR_DATA_MSB_POS:0] __mem[0:`_ARR_SIZE_THING(`_TR_ADDR_WIDTH)];
 
 	initial $readmemh("readmemh_input.txt.ignore", __mem);
 

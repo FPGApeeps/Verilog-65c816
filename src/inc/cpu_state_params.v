@@ -19,6 +19,8 @@
 `ifndef cpu_state_params_vinc
 `define cpu_state_params_vinc
 
+`include "src/inc/misc_defines.v"
+
 // Emulation mode
 
 // Reset

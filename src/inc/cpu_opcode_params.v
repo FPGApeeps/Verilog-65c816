@@ -19,7 +19,7 @@
 `define cpu_opcode_params_vinc
 
 
-`include "src/inc/enum_defines.v"
+`include "src/inc/misc_defines.v"
 
 
 //// CPU opcodes

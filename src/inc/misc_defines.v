@@ -16,11 +16,12 @@
 // with Verilog-65c816 CPU.  If not, see <http://www.gnu.org/licenses/>.
 
 
-`ifndef enum_defines_vinc
-`define enum_defines_vinc
+`ifndef misc_defines_vinc
+`define misc_defines_vinc
 
 
+`define _ARR_SIZE_THING(bit_width) ((1 << (bit_width)) - 1)
 `define _ENUM_INC(thing) (thing + 1)
 
 
-`endif		// enum_defines_vinc
+`endif		// misc_defines_vinc

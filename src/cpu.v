@@ -38,6 +38,10 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 	// Address we want to read from or write to
 	//output reg [`CPU_FAR_ADDR_MSB_POS:0] addr,
+
+
+	// Just try a 16-bit address space for now.  We will switch to a 24-bit
+	// address space later.
 	output reg [`CPU_ABS_ADDR_MSB_POS:0] addr,
 
 	output reg [`CPU_DATA_MSB_POS:0] data_out);
@@ -75,18 +79,34 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	begin
 		if (rst)
 		begin
-			// Reset the state stuff
+			// Clear outputs
 			req_rdwr <= __false;
-			which_rdwr <= __wh_rdwr__read;
+			//which_rdwr <= __wh_rdwr__read;
+			addr <= `_CPU_ABS_ADDR_WIDTH'h0000;
+			data_out <= `_CPU_DATA_WIDTH'h00;
 			__data_in_buf <= 0;
 			__opcode <= 0;
+
+
+			// Initial state
+			__state <= __st_emu__reset;
 
 		end
 
 		else if (enable)
 		begin
-			
+			case (__state)
+				__st_emu__reset:
+				begin
+					
+				end
 
+				default:
+				begin
+					$display("Unknown __state!\n");
+				end
+			endcase
+			
 		end
 
 	end
