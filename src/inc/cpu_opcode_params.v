@@ -15,34 +15,36 @@
 // You should have received a copy of the GNU General Public License along
 // with Verilog-65c816 CPU.  If not, see <http://www.gnu.org/licenses/>.
 
-`ifndef cpu_params_vinc
-`define cpu_params_vinc
+`ifndef cpu_opcode_params_vinc
+`define cpu_opcode_params_vinc
 
 
+`include "src/inc/enum_defines.v"
 
-// CPU opcodes when in native mode.
-// BRK
-parameter __cpu_nat_op__brk = `_CPU_OPCODE_WIDTH'h00;
 
-// ORA (dp, X)
-parameter __cpu_nat_op__ora__dp_index_indir_com_x = `_CPU_OPCODE_WIDTH'h01;
-
-// COP
-parameter __cpu_nat_op__cop = `_CPU_OPCODE_WIDTH'h02;
-
-// ORA sr, S
-parameter __cpu_nat_op__ora__stack_rel = `_CPU_OPCODE_WIDTH'h03;
-
-// TSB dp
-parameter __cpu_nat_op__tsb__dp = `_CPU_OPCODE_WIDTH'h04;
-
-// ORA dp
-parameter __cpu_nat_op__ora__dp = `_CPU_OPCODE_WIDTH'h05;
+//// CPU opcodes
+//// BRK
+//parameter __op__brk = `_CPU_OPCODE_WIDTH'h00;
+//
+//// ORA (dp, X)
+//parameter __op__ora__dp_index_indir_com_x = `_CPU_OPCODE_WIDTH'h01;
+//
+//// COP
+//parameter __op__cop = `_CPU_OPCODE_WIDTH'h02;
+//
+//// ORA sr, S
+//parameter __op__ora__stack_rel = `_CPU_OPCODE_WIDTH'h03;
+//
+//// TSB dp
+//parameter __op__tsb__dp = `_CPU_OPCODE_WIDTH'h04;
+//
+//// ORA dp
+//parameter __op__ora__dp = `_CPU_OPCODE_WIDTH'h05;
 
 
 
 // NOP
-parameter __cpu_nat_op__nop = `_CPU_OPCODE_WIDTH'hea;
+parameter __op__nop = `_CPU_OPCODE_WIDTH'hea;
 
 
-`endif		// cpu_params_vinc
+`endif		// cpu_opcode_params_vinc

@@ -51,12 +51,5 @@
 `define _CPU_OPCODE_WIDTH 8
 `define CPU_OPCODE_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_OPCODE_WIDTH)
 
-// Fake enums
-
-// which_rdwr
-`define _ENUM_WIDTH__CPU_WHICH_RDWR 1
-`define ENUM__CPU_WHICH_RDWR__READ `_ENUM_WIDTH__CPU_WHICH_RDWR'h0
-`define ENUM__CPU_WHICH_RDWR__WRITE `_ENUM_WIDTH__CPU_WHICH_RDWR'h1
-
 
 `endif		// cpu_defines_vinc
