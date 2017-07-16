@@ -120,7 +120,10 @@ module TestBench;
 		.data_out(__ram_data_out),
 		.data_ready(__ram_data_ready));
 
-	//Cpu cpu(.clk(__half_clk), .rst(__rst)
+	Cpu cpu(.clk(__half_clk), .rst(__rst), .enable(__cpu_enable),
+		.data_in(__cpu_data_in), .req_rdwr(__cpu_req_rdwr),
+		.which_rdwr(__cpu_which_rdwr), .addr(__cpu_addr),
+		.data_out(__cpu_data_out));
 
 	//always @ (posedge __clk)
 	//begin
