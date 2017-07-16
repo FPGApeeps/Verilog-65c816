@@ -105,17 +105,17 @@
 
 
 
-// Stack pointer (SP)
+// Stack Pointer (SP)
 
 
-// Native mode AND Emulation mode
+// Native Mode
 `define _CPU_REG_SP_WIDTH 16
 `define CPU_REG_SP_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_SP_WIDTH)
 
 
-// Emulation mode
+// Emulation Mode
 
-// Bits 15-8 (Always 0x01 in Emulation mode)
+// Bits 15-8 (Always 0x01 in Emulation Mode)
 `define _CPU_REG_SP_EMU_HI_WIDTH 8
 `define CPU_REG_SP_EMU_HI_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_SP_WIDTH)
 `define CPU_REG_SP_EMU_HI_LSB_POS `_CPU_REG_SP_EMU_HI_WIDTH
@@ -125,6 +125,13 @@
 `define CPU_REG_SP_EMU_LO_MSB_POS (`CPU_REG_SP_EMU_HI_LSB_POS - 1)
 `define CPU_REG_SP_EMU_LO_LSB_POS 0
 
+
+
+// Program Counter (PC)
+
+// The PC is officially 16-bit as far as I can tell, even in Native Mode.
+`define _CPU_REG_PC_WIDTH 16
+`define CPU_REG_PC_MSB_POS `WIDTH_TO_MSB_POS(`_CPU_REG_PC_WIDTH)
 
 
 `endif		// cpu_defines_vinc

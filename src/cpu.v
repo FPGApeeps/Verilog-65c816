@@ -86,10 +86,12 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 	// Processor Registers
 	reg [__reg_c_msb_pos:0] __reg_c;
+
+	// __reg_x is NOT a regular expression!
 	reg [__reg_index_big_msb_pos:0] __reg_x, __reg_y;
 
-	//reg [__reg_sp_msb_pos:0] __reg_sp;
-	//reg [__reg_pc_msb_pos:0] __reg_pc;
+	reg [__reg_sp_msb_pos:0] __reg_sp;
+	reg [__reg_pc_msb_pos:0] __reg_pc;
 
 
 
@@ -110,10 +112,13 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			__opcode <= 0;
 
 
-			// Clear processor registers
+			//// Clear processor registers
+			//{__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc} <= 0;
 			__reg_c <= 0;
 			__reg_x <= 2;
 			__reg_y <= 5;
+			__reg_sp <= 16'h9001;
+			__reg_pc <= 16'h2329;
 
 
 			// Initial state
@@ -132,7 +137,9 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				default:
 				begin
 					$display("Unknown __state!\n");
-					$display("%d, %d, %d\n", __reg_c, __reg_x, __reg_y);
+					$display("%h\t\t%h, %h, %h, %h, %h\n", 
+						data_in, 
+						__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc);
 					$finish;
 				end
 			endcase

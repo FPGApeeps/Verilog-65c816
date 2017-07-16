@@ -42,3 +42,29 @@ parameter __reg_index_hi_lsb_pos = `CPU_REG_INDEX_HI_LSB_POS;
 // Bits 7-0
 parameter __reg_index_lo_msb_pos = `CPU_REG_INDEX_LO_MSB_POS;
 parameter __reg_index_lo_lsb_pos = `CPU_REG_INDEX_LO_LSB_POS;
+
+
+
+// Stack Pointer (SP)
+
+// Native Mode
+parameter __reg_sp_msb_pos = `CPU_REG_SP_MSB_POS;
+
+
+// Emulation Mode
+
+// Bits 15-8 (Always 0x01 in Emulation Mode)
+parameter __reg_sp_emu_hi_msb_pos = `CPU_REG_SP_EMU_HI_MSB_POS;
+parameter __reg_sp_emu_hi_lsb_pos = `CPU_REG_SP_EMU_HI_LSB_POS;
+
+// Bits 7-0
+parameter __reg_sp_emu_lo_msb_pos = `CPU_REG_SP_EMU_LO_MSB_POS;
+parameter __reg_sp_emu_lo_lsb_pos = `CPU_REG_SP_EMU_LO_LSB_POS;
+
+
+
+// Program Counter (PC)
+
+// The PC is officially 16-bit as far as I can tell, even in Native Mode.
+parameter __reg_pc_msb_pos = `CPU_REG_PC_MSB_POS;
+
