@@ -92,16 +92,6 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 		__st__dummy;
 	`undef X
-	
-	//task set_state_enum_reg;
-	//	output [__state_msb_pos:0] state_enum_reg;
-
-	//	begin
-	//		state_enum_reg = __state_enum_counter;
-	//		__state_enum_counter = __state_enum_counter + 1;
-	//	end
-	//
-	//endtask
 
 	initial
 	begin
