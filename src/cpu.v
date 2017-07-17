@@ -84,31 +84,37 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 	reg [__state_msb_pos + 1:0] __state_enum_counter;
 
-	`define X(enum_val) enum_val,
+
+	// Use the X macro pretending we have enums here.
+	`define X(enum_reg) enum_reg,
 	reg [__state_msb_pos:0] 
 		`_LIST_OF_CPU_STATES
 
 		__st__dummy;
 	`undef X
 	
-	task set_state_enum_reg;
-		output [__state_msb_pos:0] state_enum_reg;
+	//task set_state_enum_reg;
+	//	output [__state_msb_pos:0] state_enum_reg;
 
-		begin
-			state_enum_reg = __state_enum_counter;
-			__state_enum_counter = __state_enum_counter + 1;
-		end
-	
-	endtask
+	//	begin
+	//		state_enum_reg = __state_enum_counter;
+	//		__state_enum_counter = __state_enum_counter + 1;
+	//	end
+	//
+	//endtask
 
 	initial
 	begin
 		__state_enum_counter = 0;
-		`define X(enum_val) set_state_enum_reg(enum_val);
+
+		// Use the X macro pretending we have enums here.
+		//`define X(enum_reg) set_state_enum_reg(enum_reg);
+		`define X(enum_reg) \
+		enum_reg = __state_enum_counter; \
+		__state_enum_counter = __state_enum_counter + 1;
 
 		`_LIST_OF_CPU_STATES
 		`undef X
-
 	end
 	
 
@@ -165,14 +171,15 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				__st_emu__reset:
 				begin
 					$display("__st_emu__reset\n");
-					__state <= __state + 1;
-					//__state <= __st_emu__test_load_0;
+					//__state <= __state + 1;
+					__state <= __st_emu__test_load_0;
 				end
 
 				__st_emu__test_load_0:
 				begin
 					$display("__st_emu__test_load_0\n");
 					__state <= __state + 1;
+					req_rdwr <= __true;
 				end
 
 				__st_emu__test_load_1:
@@ -209,9 +216,9 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				default:
 				begin
 					$display("Unknown __state!\n");
-					$display("%h\t\t%h\t\t%h, %h, %h, %h, %h\n", 
+					$display("%h\t\t%h, %h\t\t%h, %h, %h, %h, %h\n", 
 						data_in, 
-						__state,
+						__state, __opcode,
 						__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc);
 					$finish;
 				end
