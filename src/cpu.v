@@ -82,6 +82,28 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	reg [__state_msb_pos:0] __state;
 
 
+	reg [__state_msb_pos + 1:0] __state_enum_counter;
+
+	reg [__state_msb_pos:0] __st_emu__reset, 
+
+		__st_emu__test_load_0, __st_emu__test_load_1,
+		__st_emu__test_load_2,
+
+		__st_emu__test_store_0, __st_emu__test_store_1,
+		__st_emu__test_store_2;
+	
+	task set_state_enum_reg;
+		output [__state_msb_pos:0] state_enum_reg;
+
+		begin
+			state_enum_reg = __state_enum_counter;
+			__state_enum_counter = __state_enum_counter + 1;
+		end
+	
+	endtask
+	
+
+
 
 
 	// Processor Registers
@@ -92,6 +114,22 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 	reg [__reg_sp_msb_pos:0] __reg_sp;
 	reg [__reg_pc_msb_pos:0] __reg_pc;
+
+
+	initial
+	begin
+		__state_enum_counter = 0;
+
+		set_state_enum_reg(__st_emu__reset);
+		set_state_enum_reg(__st_emu__test_load_0);
+		set_state_enum_reg(__st_emu__test_load_1);
+		set_state_enum_reg(__st_emu__test_load_2);
+		set_state_enum_reg(__st_emu__test_store_0);
+		set_state_enum_reg(__st_emu__test_store_1);
+		set_state_enum_reg(__st_emu__test_store_2);
+
+
+	end
 
 
 
@@ -131,14 +169,54 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			case (__state)
 				__st_emu__reset:
 				begin
+					$display("__st_emu__reset\n");
+					__state <= __state + 1;
+					//__state <= __st_emu__test_load_0;
+				end
+
+				__st_emu__test_load_0:
+				begin
+					$display("__st_emu__test_load_0\n");
 					__state <= __state + 1;
 				end
+
+				__st_emu__test_load_1:
+				begin
+					$display("__st_emu__test_load_1\n");
+					__state <= __state + 1;
+				end
+
+				__st_emu__test_load_2:
+				begin
+					$display("__st_emu__test_load_2\n");
+					__state <= __state + 1;
+				end
+				
+				__st_emu__test_store_0:
+				begin
+					$display("__st_emu__test_store_0\n");
+					__state <= __state + 1;
+				end
+
+				__st_emu__test_store_1:
+				begin
+					$display("__st_emu__test_store_1\n");
+					__state <= __state + 1;
+				end
+
+				__st_emu__test_store_2:
+				begin
+					$display("__st_emu__test_store_2\n");
+					__state <= __state + 1;
+				end
+
 
 				default:
 				begin
 					$display("Unknown __state!\n");
-					$display("%h\t\t%h, %h, %h, %h, %h\n", 
+					$display("%h\t\t%h\t\t%h, %h, %h, %h, %h\n", 
 						data_in, 
+						__state,
 						__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc);
 					$finish;
 				end

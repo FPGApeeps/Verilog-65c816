@@ -21,14 +21,18 @@
 
 `include "src/inc/misc_defines.v"
 
-// Emulation mode
-
-// Reset
-parameter __st_emu__reset = `_ENUM_WI__CPU_STATE'h000;
-
-
-//parameter __st_emu__temp = `_ENUM_INC(__st_emu__reset);
-
+//// Emulation mode
+//
+//// Reset
+//parameter __st_emu__reset = `_ENUM_WI__CPU_STATE'h000;
+//
+//
+//// Test load 8-bit value
+//parameter __st_emu__test_load = `_ENUM_INC(__st_emu__reset);
+//
+//
+//// Test store 8-bit value
+//parameter __st_emu__test_store = `_ENUM_INC(__st_emu__test_load);
 
 
 //`endif		// cpu_state_params_vinc
