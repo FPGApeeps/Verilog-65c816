@@ -35,4 +35,17 @@
 //parameter __st_emu__test_store = `_ENUM_INC(__st_emu__test_load);
 
 
+// This is an X macro
+`define _LIST_OF_CPU_STATES \
+\
+`X(__st_emu__reset) \
+\
+`X(__st_emu__test_load_0) \
+`X(__st_emu__test_load_1) \
+`X(__st_emu__test_load_2) \
+\
+`X(__st_emu__test_store_0) \
+`X(__st_emu__test_store_1) \
+`X(__st_emu__test_store_2)
+
 //`endif		// cpu_state_params_vinc

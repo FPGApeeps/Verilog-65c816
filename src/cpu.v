@@ -84,13 +84,12 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 	reg [__state_msb_pos + 1:0] __state_enum_counter;
 
-	reg [__state_msb_pos:0] __st_emu__reset, 
+	`define X(enum_val) enum_val,
+	reg [__state_msb_pos:0] 
+		`_LIST_OF_CPU_STATES
 
-		__st_emu__test_load_0, __st_emu__test_load_1,
-		__st_emu__test_load_2,
-
-		__st_emu__test_store_0, __st_emu__test_store_1,
-		__st_emu__test_store_2;
+		__st__dummy;
+	`undef X
 	
 	task set_state_enum_reg;
 		output [__state_msb_pos:0] state_enum_reg;
@@ -101,6 +100,16 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 		end
 	
 	endtask
+
+	initial
+	begin
+		__state_enum_counter = 0;
+		`define X(enum_val) set_state_enum_reg(enum_val);
+
+		`_LIST_OF_CPU_STATES
+		`undef X
+
+	end
 	
 
 
@@ -116,20 +125,6 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	reg [__reg_pc_msb_pos:0] __reg_pc;
 
 
-	initial
-	begin
-		__state_enum_counter = 0;
-
-		set_state_enum_reg(__st_emu__reset);
-		set_state_enum_reg(__st_emu__test_load_0);
-		set_state_enum_reg(__st_emu__test_load_1);
-		set_state_enum_reg(__st_emu__test_load_2);
-		set_state_enum_reg(__st_emu__test_store_0);
-		set_state_enum_reg(__st_emu__test_store_1);
-		set_state_enum_reg(__st_emu__test_store_2);
-
-
-	end
 
 
 
