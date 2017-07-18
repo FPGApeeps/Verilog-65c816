@@ -119,15 +119,21 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 
 	// Processor Registers
+
+	// The accumulator
 	reg [__reg_c_msb_pos:0] __reg_c;
 
 	// __reg_x is NOT a regular expression!
 	reg [__reg_index_big_msb_pos:0] __reg_x, __reg_y;
 
+	// Stack Pointer (SP)
 	reg [__reg_sp_msb_pos:0] __reg_sp;
+
+	// Program Counter (PC)
 	reg [__reg_pc_msb_pos:0] __reg_pc;
 
 
+	// Tasks
 	task prep_load;
 		input [`CPU_ACTUAL_ADDR_MSB_POS:0] some_addr;
 
@@ -150,6 +156,7 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 		end
 	endtask
 
+	// Completely unnecessary task
 	task disab_req_rdwr;
 		req_rdwr <= __false;
 	endtask
