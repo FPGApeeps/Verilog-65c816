@@ -222,10 +222,12 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 					__state <= __state + 1;
 
 					$display("data_in:  %h\n\n", data_in);
-					__opcode <= data_in;
+					//__opcode <= data_in;
+
+					__reg_c[__reg_b_msb_pos:__reg_b_lsb_pos] <= data_in;
+
 
 					prep_load(__debug_addr_2);
-
 				end
 				
 
@@ -235,7 +237,9 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 					__state <= __st_testing__done;
 
 					$display("data_in:  %h\n\n", data_in);
-					__opcode <= data_in;
+					//__opcode <= data_in;
+					
+					__reg_c[__reg_a_msb_pos:__reg_a_lsb_pos] <= data_in;
 
 					disab_req_rdwr();
 				end
