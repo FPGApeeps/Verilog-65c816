@@ -125,12 +125,6 @@ module TestBench;
 		.which_rdwr(__cpu_which_rdwr), .addr(__cpu_addr),
 		.data_out(__cpu_data_out));
 
-	//always @ (posedge __clk)
-	//begin
-	//	
-
-	//end
-
 
 endmodule
 

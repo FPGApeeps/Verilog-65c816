@@ -108,6 +108,11 @@ module TestRam(input wire clk,
 
 		else // if (req_rdwr)
 		begin
+			$display("In TestRam:  %h\t\t%h\t\t%h, %h\n\n\n", 
+				we,
+				addr, 
+				data_in, data_out);
+
 			data_ready <= __can_rdwr;
 		end
 	end

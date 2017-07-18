@@ -27,12 +27,6 @@
 //parameter __st_emu__reset = `_ENUM_WI__CPU_STATE'h000;
 //
 //
-//// Test load 8-bit value
-//parameter __st_emu__test_load = `_ENUM_INC(__st_emu__reset);
-//
-//
-//// Test store 8-bit value
-//parameter __st_emu__test_store = `_ENUM_INC(__st_emu__test_load);
 
 
 // This is an X macro
@@ -40,12 +34,15 @@
 \
 `X(__st_emu__reset) \
 \
-`X(__st_emu__test_load_0) \
-`X(__st_emu__test_load_1) \
-`X(__st_emu__test_load_2) \
 \
-`X(__st_emu__test_store_0) \
-`X(__st_emu__test_store_1) \
-`X(__st_emu__test_store_2)
+\
+`X(__st_testing__test_load_0) \
+`X(__st_testing__test_load_1) \
+`X(__st_testing__test_load_2) \
+\
+`X(__st_testing__test_store_0) \
+`X(__st_testing__test_store_1) \
+\
+`X(__st_testing__done)
 
 //`endif		// cpu_state_params_vinc

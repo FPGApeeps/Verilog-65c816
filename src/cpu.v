@@ -52,6 +52,8 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 
 
 
+
+
 	// Parameters
 	`include "src/inc/generic_params.v"
 	`include "src/inc/cpu_state_params.v"
@@ -70,6 +72,9 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	`include "src/inc/cpu_reg_params.v"
 
 
+	// This is used for debugging purposes... as the name suggests.
+	parameter __debug_addr = `_CPU_ACTUAL_ADDR_WIDTH'hf000;
+	parameter __debug_addr_2 = __debug_addr + `_CPU_ACTUAL_ADDR_WIDTH'h500;
 
 
 
@@ -90,6 +95,8 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	reg [__state_msb_pos:0] 
 		`_LIST_OF_CPU_STATES
 
+		// This is necessary because of how the X macro is set up (having a
+		// comma at the end)
 		__st__dummy;
 	`undef X
 
@@ -121,6 +128,31 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	reg [__reg_pc_msb_pos:0] __reg_pc;
 
 
+	task prep_load;
+		input [`CPU_ACTUAL_ADDR_MSB_POS:0] some_addr;
+
+		begin
+			req_rdwr <= __true;
+			which_rdwr <= __wh_rdwr__read;
+			addr <= some_addr;
+		end
+	endtask
+
+	task prep_store;
+		input [`CPU_ACTUAL_ADDR_MSB_POS:0] some_addr;
+		input [`CPU_DATA_MSB_POS:0] some_data_out;
+
+		begin
+			req_rdwr <= __true;
+			which_rdwr <= __wh_rdwr__write;
+			addr <= some_addr;
+			data_out <= some_data_out;
+		end
+	endtask
+
+	task disab_req_rdwr;
+		req_rdwr <= __false;
+	endtask
 
 
 
@@ -130,7 +162,8 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 		if (rst)
 		begin
 			// Clear outputs
-			req_rdwr <= __false;
+			//req_rdwr <= __false;
+			disab_req_rdwr();
 			//which_rdwr <= __wh_rdwr__read;
 			addr <= `_CPU_ACTUAL_ADDR_WIDTH'h0000;
 			data_out <= `_CPU_DATA_WIDTH'h00;
@@ -161,53 +194,72 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				__st_emu__reset:
 				begin
 					$display("__st_emu__reset\n");
-					//__state <= __state + 1;
-					__state <= __st_emu__test_load_0;
+					//__state <= __st_testing__test_load_0;
+					__state <= __st_testing__test_store_0;
 				end
 
-				__st_emu__test_load_0:
+
+				// Test an 8-bit load
+				__st_testing__test_load_0:
 				begin
-					$display("__st_emu__test_load_0\n");
+					$display("__st_testing__test_load_0\n");
 					__state <= __state + 1;
-					req_rdwr <= __true;
+
+					prep_load(__debug_addr);
 				end
 
-				__st_emu__test_load_1:
+				// Test another 8-bit load
+				__st_testing__test_load_1:
 				begin
-					$display("__st_emu__test_load_1\n");
+					$display("__st_testing__test_load_1\n");
 					__state <= __state + 1;
-				end
 
-				__st_emu__test_load_2:
-				begin
-					$display("__st_emu__test_load_2\n");
-					__state <= __state + 1;
+					$display("data_in:  %h\n\n", data_in);
+					__opcode <= data_in;
+
+					prep_load(__debug_addr_2);
+
 				end
 				
-				__st_emu__test_store_0:
+
+				__st_testing__test_load_2:
 				begin
-					$display("__st_emu__test_store_0\n");
-					__state <= __state + 1;
+					$display("__st_testing__test_load_1\n");
+					__state <= __st_testing__done;
+
+					$display("data_in:  %h\n\n", data_in);
+					__opcode <= data_in;
+
+					disab_req_rdwr();
 				end
 
-				__st_emu__test_store_1:
+
+
+				// Test an 8-bit store
+				__st_testing__test_store_0:
 				begin
-					$display("__st_emu__test_store_1\n");
+					$display("__st_testing__test_store_0\n");
 					__state <= __state + 1;
+
+					prep_store(__debug_addr, `_CPU_DATA_WIDTH'h45);
 				end
 
-				__st_emu__test_store_2:
+
+				__st_testing__test_store_1:
 				begin
-					$display("__st_emu__test_store_2\n");
-					__state <= __state + 1;
+					$display("__st_testing__test_store_1\n");
+					//__state <= __state + 1;
+					__state <= __st_testing__test_load_0;
+
+					prep_store(__debug_addr_2, `_CPU_DATA_WIDTH'h87);
 				end
 
 
 				default:
 				begin
-					$display("Unknown __state!\n");
-					$display("%h\t\t%h, %h\t\t%h, %h, %h, %h, %h\n", 
-						data_in, 
+					$display("Final __state\n");
+					$display("%h, %h\t\t%h, %h\t\t%h, %h, %h, %h, %h\n", 
+						data_in, data_out,
 						__state, __opcode,
 						__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc);
 					$finish;
