@@ -72,10 +72,7 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	`include "src/inc/cpu_reg_params.v"
 
 
-	// This is used for debugging purposes... as the name suggests.
-	parameter __debug_addr = `_CPU_ACTUAL_ADDR_WIDTH'hf000;
-	parameter __debug_addr_2 = __debug_addr + `_CPU_ACTUAL_ADDR_WIDTH'h500;
-
+	`include "src/inc/cpu_debug_params.v"
 
 
 	// Internal buffers
@@ -162,9 +159,42 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 	endtask
 
 
+	task debug_show_state;
+		case (__state)
+			`define X(enum_reg) \
+			enum_reg: \
+			begin \
+				$display(`"enum_reg\n\n`"); \
+			end
+
+			`_LIST_OF_CPU_STATES
+			`undef X
+
+
+			default:
+			begin
+				$display("Final __state\n");
+			end
+		endcase
+	endtask
 
 	always @ (posedge clk)
 	begin
+		if (!rst)
+		begin
+			debug_show_state();
+
+			if (enable)
+			begin
+				$display("CPU ENabled!");
+			end
+
+			else // if (!enable)
+			begin
+				$display("CPU DISabled!");
+			end
+		end
+
 		// Reset signal
 		if (rst)
 		begin
@@ -181,13 +211,13 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			__opcode <= 0;
 
 
-			//// Clear processor registers
-			//{__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc} <= 0;
-			__reg_c <= 0;
-			__reg_x <= 2;
-			__reg_y <= 5;
-			__reg_sp <= 16'h9001;
-			__reg_pc <= 16'h2329;
+			// Clear processor registers
+			{__reg_c, __reg_x, __reg_y, __reg_sp, __reg_pc} <= 0;
+			//__reg_c <= 0;
+			//__reg_x <= 2;
+			//__reg_y <= 5;
+			//__reg_sp <= 16'h9001;
+			//__reg_pc <= 16'h2329;
 
 
 			// Initial state
@@ -200,7 +230,6 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			case (__state)
 				__st_emu__reset:
 				begin
-					$display("__st_emu__reset\n");
 					//__state <= __st_testing__test_load_0;
 					__state <= __st_testing__test_store_0;
 				end
@@ -209,16 +238,14 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				// Test an 8-bit load
 				__st_testing__test_load_0:
 				begin
-					$display("__st_testing__test_load_0\n");
 					__state <= __state + 1;
 
-					prep_load(__debug_addr);
+					prep_load(__debug_addr_0);
 				end
 
 				// Test another 8-bit load
 				__st_testing__test_load_1:
 				begin
-					$display("__st_testing__test_load_1\n");
 					__state <= __state + 1;
 
 					$display("data_in:  %h\n\n", data_in);
@@ -227,19 +254,33 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 					__reg_c[__reg_b_msb_pos:__reg_b_lsb_pos] <= data_in;
 
 
-					prep_load(__debug_addr_2);
+					prep_load(__debug_addr_1);
 				end
 				
 
 				__st_testing__test_load_2:
 				begin
-					$display("__st_testing__test_load_1\n");
-					__state <= __st_testing__done;
+					__state <= __state + 1;
 
 					$display("data_in:  %h\n\n", data_in);
 					//__opcode <= data_in;
 					
 					__reg_c[__reg_a_msb_pos:__reg_a_lsb_pos] <= data_in;
+
+					//disab_req_rdwr();
+					prep_load(__debug_addr_2);
+				end
+
+
+				__st_testing__test_load_3:
+				begin
+					__state <= __st_testing__done;
+					
+					$display("data_in:  %h\n\n", data_in);
+					//__opcode <= data_in;
+
+					__reg_x[__reg_index_hi_msb_pos:__reg_index_hi_lsb_pos]
+						<= data_in;
 
 					disab_req_rdwr();
 				end
@@ -249,26 +290,30 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 				// Test an 8-bit store
 				__st_testing__test_store_0:
 				begin
-					$display("__st_testing__test_store_0\n");
 					__state <= __state + 1;
 
-					prep_store(__debug_addr, `_CPU_DATA_WIDTH'h45);
+					prep_store(__debug_addr_0, `_CPU_DATA_WIDTH'h45);
 				end
 
 
 				__st_testing__test_store_1:
 				begin
-					$display("__st_testing__test_store_1\n");
-					//__state <= __state + 1;
+					__state <= __state + 1;
+					//__state <= __st_testing__test_load_0;
+
+					prep_store(__debug_addr_1, `_CPU_DATA_WIDTH'h87);
+				end
+
+				__st_testing__test_store_2:
+				begin
 					__state <= __st_testing__test_load_0;
 
-					prep_store(__debug_addr_2, `_CPU_DATA_WIDTH'h87);
+					prep_store(__debug_addr_2, `_CPU_DATA_WIDTH'haa);
 				end
 
 
 				default:
 				begin
-					$display("Final __state\n");
 					$display("%h, %h\t\t%h, %h\t\t%h, %h, %h, %h, %h\n", 
 						data_in, data_out,
 						__state, __opcode,
@@ -278,7 +323,6 @@ module Cpu(input wire clk, input wire rst, input wire enable,
 			endcase
 			
 		end
-
 	end
 
 endmodule

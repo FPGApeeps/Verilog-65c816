@@ -16,38 +16,10 @@
 // with Verilog-65c816.  If not, see <http://www.gnu.org/licenses/>.
 
 
-//`ifndef cpu_state_params_vinc
-//`define cpu_state_params_vinc
-
-`include "src/inc/misc_defines.v"
-
-//// Emulation mode
-//
-//// Reset
-//parameter __st_emu__reset = `_ENUM_WI__CPU_STATE'h000;
-//
-//
+`include "src/inc/cpu_defines.v"
 
 
-// This is an X macro
-`define _LIST_OF_CPU_STATES \
-\
-`X(__st_emu__reset) \
-\
-\
-\
-/* Test an 8-bit load */ \
-`X(__st_testing__test_load_0) \
-/* Test another 8-bit load */ \
-`X(__st_testing__test_load_1) \
-`X(__st_testing__test_load_2) \
-`X(__st_testing__test_load_3) \
-\
-/* Test an 8-bit store */ \
-`X(__st_testing__test_store_0) \
-`X(__st_testing__test_store_1) \
-`X(__st_testing__test_store_2) \
-\
-`X(__st_testing__done)
-
-//`endif		// cpu_state_params_vinc
+// These are used for debugging purposes... as the names suggest.
+parameter __debug_addr_0 = `_CPU_ACTUAL_ADDR_WIDTH'hf000;
+parameter __debug_addr_1 = __debug_addr_0 + `_CPU_ACTUAL_ADDR_WIDTH'h100;
+parameter __debug_addr_2 = __debug_addr_0 + `_CPU_ACTUAL_ADDR_WIDTH'h500;
